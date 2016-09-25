@@ -192,6 +192,8 @@
   (when prelude-clean-whitespace-on-save
     (whitespace-cleanup)))
 
+;(set-default 'prelude-whitespace nil)
+
 (defun prelude-enable-whitespace ()
   "Enable `whitespace-mode' if `prelude-whitespace' is not nil."
   (when prelude-whitespace
@@ -322,8 +324,10 @@ indent yanked text (with prefix arg don't indent)."
 
 ;; whitespace-mode config
 (require 'whitespace)
-(setq whitespace-line-column 80) ;; limit line length
-(setq whitespace-style '(face tabs empty trailing lines-tail))
+;(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-line-column 200) ;; limit line length
+;(setq whitespace-style '(face tabs empty trailing lines-tail))
+(setq whitespace-style '(face empty trailing lines-tail))
 
 ;; saner regex syntax
 (require 're-builder)
