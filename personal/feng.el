@@ -4,7 +4,7 @@
 ;(setq debug-on-quit t)
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode rtags company))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 
 (require 'prelude-ido)
@@ -141,3 +141,33 @@
 (define-key global-map (kbd "C-,") (function tags-find-references))
 (define-key global-map (kbd "C-<") (function rtags-find-virtuals-at-point))
 (define-key global-map (kbd "M-i") (function tags-imenu))
+
+
+;(require 'package)
+;(package-initialize)
+(require 'rtags)
+(require 'company)
+
+(setq rtags-autostart-diagnostics t)
+(rtags-diagnostics)
+(setq rtags-completions-enabled t)
+(push 'company-rtags company-backends)
+(global-company-mode)
+(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+
+(require 'flycheck-rtags)
+
+(defun my-flycheck-rtags-setup ()
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+  (setq-local flycheck-check-syntax-automatically nil))
+;; c-mode-common-hook is also called by c++-mode
+(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+
+(rtags-enable-standard-keybindings c-mode-base-map "\C-cr")
+
+(setq rtags-close-taglist-on-selection t)
+(setq rtags-find-file-case-insensitive t)
+;(custom-set-variables '(rtags-close-taglist-on-selection nil))
+;or you can just use setq, since the variable doesn't have a setter defined:
+;(setq cperl-indent-parens-as-block t)
