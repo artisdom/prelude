@@ -31,6 +31,7 @@
 (server-start)
 
 (load "desktop")
+(setq desktop-load-locked-desktop t)
 (desktop-save-mode 1)
 (desktop-load-default)
 (desktop-read)
