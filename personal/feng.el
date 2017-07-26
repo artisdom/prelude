@@ -5,7 +5,7 @@
 
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode))
-(prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
+(prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
 
 (require 'prelude-ido)
 (require 'prelude-c)
