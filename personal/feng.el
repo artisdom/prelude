@@ -4,7 +4,7 @@
 ;(setq debug-on-quit t)
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode rtags company))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 
 (require 'prelude-ido)
@@ -31,8 +31,7 @@
 (server-start)
 
 (load "desktop")
-(setq desktop-load-locked-desktop t)
-(desktop-save-mode 1)
+;(desktop-save-mode 1)
 (desktop-load-default)
 (desktop-read)
 
@@ -71,27 +70,10 @@
 (menu-bar-mode)
 
 (setq projectile-enable-caching t)
-; (setq prelude-whitespace nil)
-; (set-default 'prelude-whitespace nil)
-
+;(setq prelude-whitespace nil)
 
 
 ;; rtags
-;; https://github.com/Andersbakken/rtags
-
-;(require 'package)
-;(package-initialize)
-
-(require 'rtags)
-(require 'company)
-(require 'flycheck-rtags)
-
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
-(push 'company-rtags company-backends)
-(global-company-mode)
-(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 
 (defun use-rtags (&optional useFileManager)
   (and (rtags-executable-find "rc")
@@ -122,8 +104,6 @@
   (interactive)
   (call-interactively (if (use-rtags t) 'rtags-imenu 'idomenu)))
 
-(custom-set-variables '(sp-override-key-bindings (quote (("C-M-f") ("C-M-b")))))
-
 (define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
 (define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
 (define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
@@ -131,9 +111,6 @@
 (define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
 (define-key c-mode-base-map (kbd "C-<") (function rtags-find-virtuals-at-point))
 (define-key c-mode-base-map (kbd "M-i") (function tags-imenu))
-(define-key c-mode-base-map (kbd "C-M-b") (function rtags-location-stack-back))
-(define-key c-mode-base-map (kbd "C-M-f") (function rtags-location-stack-forward))
-(define-key c-mode-base-map (kbd "C-M-S-r") (function rtags-find-all-references-at-point))
 
 (define-key global-map (kbd "M-.") (function tags-find-symbol-at-point))
 (define-key global-map (kbd "M-,") (function tags-find-references-at-point))
@@ -159,11 +136,13 @@
 (require 'flycheck-rtags)
 
 (defun my-flycheck-rtags-setup ()
+  "Configure flycheck-rtags for better experience."
   (flycheck-select-checker 'rtags)
-  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-  (setq-local flycheck-check-syntax-automatically nil))
-;; c-mode-common-hook is also called by c++-mode
-(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+  (setq-local flycheck-check-syntax-automatically nil)
+  (setq-local flycheck-highlighting-mode nil))
+(add-hook 'c-mode-hook #'my-flycheck-rtags-setup)
+(add-hook 'c++-mode-hook #'my-flycheck-rtags-setup)
+(add-hook 'objc-mode-hook #'my-flycheck-rtags-setup)
 
 (rtags-enable-standard-keybindings c-mode-base-map "\C-cr")
 
