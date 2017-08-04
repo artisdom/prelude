@@ -4,7 +4,7 @@
 ;(setq debug-on-quit t)
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
 
 (require 'prelude-ido)
