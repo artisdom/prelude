@@ -151,3 +151,8 @@
 ;(custom-set-variables '(rtags-close-taglist-on-selection nil))
 ;or you can just use setq, since the variable doesn't have a setter defined:
 ;(setq cperl-indent-parens-as-block t)
+
+(defun open-atom ()
+  (interactive)
+  (call-process
+   "atom" nil t nil buffer-file-name))
