@@ -161,6 +161,10 @@
   (call-process
    "atom" nil t nil buffer-file-name))
 
+(when (require 'edit-server nil t)
+  (setq edit-server-new-frame nil)
+  (edit-server-start))
+
 (custom-set-variables
  '(zoom-mode t))
 ;(custom-set-variables
