@@ -4,7 +4,7 @@
 ;(setq debug-on-quit t)
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
 
 (require 'prelude-ido)
@@ -152,7 +152,23 @@
 ;or you can just use setq, since the variable doesn't have a setter defined:
 ;(setq cperl-indent-parens-as-block t)
 
+(setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/home/ezfenxi/cpp/clang/build/bin"))
+(setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
+(setq exec-path (append exec-path '("/home/ezfenxi/cpp/clang/build/bin")))
+
 (defun open-atom ()
   (interactive)
   (call-process
    "atom" nil t nil buffer-file-name))
+
+(custom-set-variables
+ '(zoom-mode t))
+;(custom-set-variables
+; '(zoom-size '(0.618 . 0.618)))
+
+(defun size-callback ()
+  (cond ((> (frame-pixel-width) 1280) '(90 . 0.75))
+        (t                            '(0.5 . 0.5))))
+
+(custom-set-variables
+ '(zoom-size 'size-callback))
