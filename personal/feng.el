@@ -176,3 +176,11 @@
 
 (custom-set-variables
  '(zoom-size 'size-callback))
+
+;(prefer-coding-system 'utf-8)
+;(set-default-coding-systems 'utf-8)
+;(set-language-environment 'utf-8)
+;(set-selection-coding-system 'utf-8)
+
+;(let ((coding-system-for-read 'no-conversion)))
+(let ((coding-system-for-write 'utf-8)))
