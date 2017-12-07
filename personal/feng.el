@@ -9,7 +9,7 @@
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
-(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers flycheck flycheck-rtags flycheck-irony company-rtags))
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -241,3 +241,6 @@
 (add-hook 'c-mode-common-hook 'ws-butler-mode)
 
 (setq speedbar-show-unknown-files t)
+
+(require 'cmake-ide)
+(cmake-ide-setup)
