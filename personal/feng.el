@@ -4,8 +4,9 @@
 ;(setq debug-on-quit t)
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -184,3 +185,12 @@
 
 ;(let ((coding-system-for-read 'no-conversion)))
 (let ((coding-system-for-write 'utf-8)))
+
+(require 'dtrt-indent)
+(dtrt-indent-mode 1)
+(setq dtrt-indent-verbosity 0)
+
+(require 'ws-butler)
+(add-hook 'c-mode-common-hook 'ws-butler-mode)
+
+(setq speedbar-show-unknown-files t)
