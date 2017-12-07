@@ -3,10 +3,13 @@
 
 ;(setq debug-on-quit t)
 
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
-(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar))
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers flycheck flycheck-rtags flycheck-irony company-rtags))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -126,14 +129,52 @@
 ;(package-initialize)
 (require 'rtags)
 (require 'company)
+(require 'company-rtags)
 
 (setq rtags-autostart-diagnostics t)
 (rtags-diagnostics)
 (setq rtags-completions-enabled t)
-(push 'company-rtags company-backends)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-rtags))
 (global-company-mode)
 (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 
+(require 'helm-rtags)
+(setq rtags-use-helm t)
+
+
+(require 'irony)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+
+(require 'company-irony)
+(require 'company-irony-c-headers)
+
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(setq company-backends (delete 'company-semantic company-backends))
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+
+(setq company-idle-delay 0)
+(define-key c-mode-map [(tab)] 'company-complete)
+(define-key c++-mode-map [(tab)] 'company-complete)
+
+
+(require 'flycheck)
 (require 'flycheck-rtags)
 
 (defun my-flycheck-rtags-setup ()
@@ -152,6 +193,12 @@
 ;(custom-set-variables '(rtags-close-taglist-on-selection nil))
 ;or you can just use setq, since the variable doesn't have a setter defined:
 ;(setq cperl-indent-parens-as-block t)
+
+
+(require 'flycheck-irony)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
 
 (setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/home/ezfenxi/cpp/clang/build/bin"))
 (setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
