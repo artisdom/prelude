@@ -6,10 +6,16 @@
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
+(setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/proj/epg-tools/clang/5.0.0/bin/"))
+(setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
+;(setq exec-path (append exec-path '("/home/ezfenxi/cpp/clang/build/bin")))
+(setq exec-path (append exec-path '("/proj/epg-tools/clang/5.0.0/bin/")))
+
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
-(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide))
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers
+                                      flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide 0blayout))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -199,11 +205,6 @@
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-
-(setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/home/ezfenxi/cpp/clang/build/bin"))
-(setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
-(setq exec-path (append exec-path '("/home/ezfenxi/cpp/clang/build/bin")))
-
 (defun open-atom ()
   (interactive)
   (call-process
@@ -242,5 +243,5 @@
 
 (setq speedbar-show-unknown-files t)
 
-(require 'cmake-ide)
-(cmake-ide-setup)
+; (require 'cmake-ide)
+; (cmake-ide-setup)
