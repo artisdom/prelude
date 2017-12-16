@@ -15,7 +15,9 @@
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers
-                                      flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide 0blayout))
+                                      flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide 0blayout
+                                      company-ycmd ycmd flycheck-ycmd neotree jump-tree sourcetrail))
+;sourcetrail
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -28,11 +30,6 @@
 (require 'prelude-js)
 (require 'prelude-emacs-lisp)
 
-(eval-after-load "haskell-mode"
-  '(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile))
-(eval-after-load "haskell-cabal"
-  '(define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
-
 (global-linum-mode 1)                   ; add line numbers on the left
 
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
@@ -41,8 +38,8 @@
 (server-start)
 
 (load "desktop")
-;(desktop-save-mode 1)
-(desktop-load-default)
+(desktop-save-mode 1)
+;(desktop-load-default)
 (desktop-read)
 
 ;; scroll one line at a time (less "jumpy" than defaults)
@@ -149,37 +146,6 @@
 (require 'helm-rtags)
 (setq rtags-use-helm t)
 
-
-(require 'irony)
-
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-
-(require 'company-irony)
-(require 'company-irony-c-headers)
-
-(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-(setq company-backends (delete 'company-semantic company-backends))
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends '(company-irony-c-headers company-irony)))
-
-(setq company-idle-delay 0)
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
-
-
 (require 'flycheck)
 (require 'flycheck-rtags)
 
@@ -200,11 +166,6 @@
 ;or you can just use setq, since the variable doesn't have a setter defined:
 ;(setq cperl-indent-parens-as-block t)
 
-
-(require 'flycheck-irony)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
 (defun open-atom ()
   (interactive)
   (call-process
@@ -214,6 +175,7 @@
   (setq edit-server-new-frame nil)
   (edit-server-start))
 
+(require 'zoom)
 (custom-set-variables
  '(zoom-mode t))
 ;(custom-set-variables
@@ -241,7 +203,22 @@
 (require 'ws-butler)
 (add-hook 'c-mode-common-hook 'ws-butler-mode)
 
+;;;; Set always complete immediately
+;(setq company-idle-delay 0)
+
 (setq speedbar-show-unknown-files t)
 
-; (require 'cmake-ide)
-; (cmake-ide-setup)
+(require 'sr-speedbar)
+
+(setq
+ sr-speedbar-width 15
+ sr-speedbar-max-width 15
+ speedbar-use-images nil
+ speedbar-show-unknown-files t
+ sr-speedbar-right-side nil
+)
+
+(require 'neotree)
+(require 'jump-tree)
+(require 'sourcetrail)
+;sourcetrail-mode
