@@ -1,3 +1,11 @@
+;(prelude-require-packages '(company-ycmd ycmd flycheck-ycmd irony company-irony company-irony-c-headers flycheck-irony cmake-ide))
+
+;; (setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/proj/epg-tools/clang/5.0.0/bin/"))
+;; (setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
+;;                                         ;(setq exec-path (append exec-path '("/home/ezfenxi/cpp/clang/build/bin")))
+;; (setq exec-path (append exec-path '("/proj/epg-tools/clang/5.0.0/bin/")))
+
+
 ;; (eval-after-load "haskell-mode"
 ;;   '(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile))
 ;; (eval-after-load "haskell-cabal"
