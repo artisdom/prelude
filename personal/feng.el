@@ -6,17 +6,15 @@
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
-(setenv "PATH" (concat (getenv "PATH") ":/home/ezfenxi/w/cpp/rtags/build/bin/:/proj/epg-tools/clang/5.0.0/bin/"))
-(setq exec-path (append exec-path '("/home/ezfenxi/w/cpp/rtags/build/bin/")))
-;(setq exec-path (append exec-path '("/home/ezfenxi/cpp/clang/build/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/5.0.0/bin/"))
 (setq exec-path (append exec-path '("/proj/epg-tools/clang/5.0.0/bin/")))
 
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
-(prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools flycheck-rtags)) ;haskell
-(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar helm-rtags irony company-irony company-irony-c-headers
-                                      flycheck flycheck-rtags flycheck-irony company-rtags cmake-ide 0blayout
-                                      company-ycmd ycmd flycheck-ycmd neotree jump-tree sourcetrail))
+(prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree sourcetrail))
+(prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
+
 ;sourcetrail
 
 (require 'prelude-ido)
@@ -79,92 +77,8 @@
 (setq projectile-enable-caching t)
 ;(setq prelude-whitespace nil)
 
-
-;; rtags
-
-(defun use-rtags (&optional useFileManager)
-  (and (rtags-executable-find "rc")
-       (cond ((not (gtags-get-rootpath)) t)
-             ((and (not (eq major-mode 'c++-mode))
-                   (not (eq major-mode 'c-mode))) (rtags-has-filemanager))
-             (useFileManager (rtags-has-filemanager))
-             (t (rtags-is-indexed)))))
-
-(defun tags-find-symbol-at-point (&optional prefix)
-  (interactive "P")
-  (if (and (not (rtags-find-symbol-at-point prefix)) rtags-last-request-not-indexed)
-      (gtags-find-tag)))
-(defun tags-find-references-at-point (&optional prefix)
-  (interactive "P")
-  (if (and (not (rtags-find-references-at-point prefix)) rtags-last-request-not-indexed)
-      (gtags-find-rtag)))
-(defun tags-find-symbol ()
-  (interactive)
-  (call-interactively (if (use-rtags) 'rtags-find-symbol 'gtags-find-symbol)))
-(defun tags-find-references ()
-  (interactive)
-  (call-interactively (if (use-rtags) 'rtags-find-references 'gtags-find-rtag)))
-(defun tags-find-file ()
-  (interactive)
-  (call-interactively (if (use-rtags t) 'rtags-find-file 'gtags-find-file)))
-(defun tags-imenu ()
-  (interactive)
-  (call-interactively (if (use-rtags t) 'rtags-imenu 'idomenu)))
-
-(define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
-(define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
-(define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
-(define-key c-mode-base-map (kbd "C-.") (function tags-find-symbol))
-(define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
-(define-key c-mode-base-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-(define-key c-mode-base-map (kbd "M-i") (function tags-imenu))
-
-(define-key global-map (kbd "M-.") (function tags-find-symbol-at-point))
-(define-key global-map (kbd "M-,") (function tags-find-references-at-point))
-(define-key global-map (kbd "M-;") (function tags-find-file))
-(define-key global-map (kbd "C-.") (function tags-find-symbol))
-(define-key global-map (kbd "C-,") (function tags-find-references))
-(define-key global-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-(define-key global-map (kbd "M-i") (function tags-imenu))
-
-
 ;(require 'package)
 ;(package-initialize)
-(require 'rtags)
-(require 'company)
-(require 'company-rtags)
-
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends 'company-rtags))
-(global-company-mode)
-(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-
-(require 'helm-rtags)
-(setq rtags-use-helm t)
-
-(require 'flycheck)
-(require 'flycheck-rtags)
-
-(defun my-flycheck-rtags-setup ()
-  "Configure flycheck-rtags for better experience."
-  (flycheck-select-checker 'rtags)
-  (setq-local flycheck-check-syntax-automatically nil)
-  (setq-local flycheck-highlighting-mode nil))
-(add-hook 'c-mode-hook #'my-flycheck-rtags-setup)
-(add-hook 'c++-mode-hook #'my-flycheck-rtags-setup)
-(add-hook 'objc-mode-hook #'my-flycheck-rtags-setup)
-
-(rtags-enable-standard-keybindings c-mode-base-map "\C-cr")
-
-(setq rtags-close-taglist-on-selection t)
-(setq rtags-find-file-case-insensitive t)
-;(custom-set-variables '(rtags-close-taglist-on-selection nil))
-;or you can just use setq, since the variable doesn't have a setter defined:
-;(setq cperl-indent-parens-as-block t)
 
 (defun open-atom ()
   (interactive)
@@ -202,9 +116,6 @@
 
 (require 'ws-butler)
 (add-hook 'c-mode-common-hook 'ws-butler-mode)
-
-;;;; Set always complete immediately
-;(setq company-idle-delay 0)
 
 (setq speedbar-show-unknown-files t)
 
