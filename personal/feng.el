@@ -3,9 +3,6 @@
 
 ;(setq debug-on-quit t)
 
-;(load-file "/home/ezfenxi/w/cpp/irony-mode_Hylen/irony.el")
-;(require 'irony-mode)
-
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
