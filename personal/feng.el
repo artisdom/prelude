@@ -3,6 +3,9 @@
 
 ;(setq debug-on-quit t)
 
+;(load-file "/home/ezfenxi/w/cpp/irony-mode_Hylen/irony.el")
+;(require 'irony-mode)
+
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
@@ -12,10 +15,8 @@
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
-(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree sourcetrail))
+(prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
-
-;sourcetrail
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -131,5 +132,5 @@
 
 (require 'neotree)
 (require 'jump-tree)
-(require 'sourcetrail)
+;(require 'sourcetrail)
 ;sourcetrail-mode
