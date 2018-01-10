@@ -6,14 +6,17 @@
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
-(setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/5.0.0/bin/"))
-(setq exec-path (append exec-path '("/proj/epg-tools/clang/5.0.0/bin/")))
+(setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/4.0.1/bin/"))
+(setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
 
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
+
+;(prelude-require-packages '( project-explorer window-purpose))
+(prelude-require-packages '(use-package lsp-mode))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -131,3 +134,49 @@
 (require 'jump-tree)
 ;(require 'sourcetrail)
 ;sourcetrail-mode
+
+;(require 'window-purpose)
+;(purpose-mode)
+
+(tool-bar-mode)
+
+(tool-bar-add-item "left-arrow" 'rtags-location-stack-back
+                   'rtags-location-stack-back
+                   :help   "rtags-location-stack-back")
+(tool-bar-add-item "right-arrow" 'rtags-location-stack-forward
+                   'rtags-location-stack-forward
+                   :help   "rtags-location-stack-forward")
+
+(tool-bar-add-item "describe" 'rtags-find-symbol-at-point
+                   'rtags-find-symbol-at-point
+                   :help   "rtags-find-symbol-at-point")
+(tool-bar-add-item "index" 'rtags-find-references-at-point
+                   'rtags-find-references-at-point
+                   :help   "rtags-find-references-at-point")
+(tool-bar-add-item "index" 'rtags-find-all-references-at-point
+                   'rtags-find-all-references-at-point
+                   :help   "rtags-find-all-references-at-point")
+(tool-bar-add-item "index" 'rtags-find-file
+                   'rtags-find-file
+                   :help   "rtags-find-file")
+(tool-bar-add-item "index" 'rtags-show-rtags-buffer
+                   'rtags-show-rtags-buffer
+                   :help   "rtags-show-rtags-buffer")
+(tool-bar-add-item "index" 'rtags-taglist
+                   'rtags-taglist
+                   :help   "rtags-taglist")
+
+(tool-bar-add-item "refresh" 'rtags-reparse-file
+                   'rtags-reparse-file
+                   :help   "rtags-reparse-file")
+
+(tool-bar-add-item "index" 'desktop-save
+                   'desktop-save
+                   :help   "desktop-save")
+
+(use-package cquery
+             :load-path
+             "/home/ezfenxi/w/cpp/cquery/emacs/"
+             :config
+             ;; put your config here
+             (setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery"))
