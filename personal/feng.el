@@ -14,9 +14,10 @@
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
+(prelude-require-packages '(lsp-mode lsp-ui cquery)) ; cquery
 
-;(prelude-require-packages '( project-explorer window-purpose))
-(prelude-require-packages '(use-package lsp-mode))
+;(prelude-require-packages '(project-explorer window-purpose))
+;(prelude-require-packages '(use-package lsp-mode))
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -174,9 +175,25 @@
                    'desktop-save
                    :help   "desktop-save")
 
-(use-package cquery
-             :load-path
-             "/home/ezfenxi/w/cpp/cquery/emacs/"
-             :config
-             ;; put your config here
-             (setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery"))
+
+(require 'cquery)
+(require 'lsp-mode)
+(require 'lsp-ui)
+
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery")
+;; Log file
+(setq cquery-extra-args '("--log-file=/workspace/git/ezfenxi/cquery.log"))
+;; Initialization options
+;; (setq cquery-extra-init-params '())
+;(setq cquery-extra-init-params '(:cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg"))
+;(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg_emacs"))
+(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack"))
+
+(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+
+(add-hook 'c-mode-hook #'lsp-cquery-enable)
+(add-hook 'c++-mode-hook #'lsp-cquery-enable)
+(add-hook 'objc-mode-hook #'lsp-cquery-enable)
