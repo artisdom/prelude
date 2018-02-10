@@ -3,20 +3,20 @@
 
 ;(setq debug-on-quit t)
 
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+;(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+;                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
 (setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/4.0.1/bin/"))
 (setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company zoom plantuml-mode))
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
 (prelude-require-packages '(lsp-mode lsp-ui cquery)) ; cquery
 
-;(prelude-require-packages '(project-explorer window-purpose))
+;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 
 (require 'prelude-ido)
@@ -91,18 +91,18 @@
   (setq edit-server-new-frame nil)
   (edit-server-start))
 
-(require 'zoom)
-(custom-set-variables
- '(zoom-mode t))
+;(require 'zoom)
+;(custom-set-variables
+; '(zoom-mode t))
 ;(custom-set-variables
 ; '(zoom-size '(0.618 . 0.618)))
 
-(defun size-callback ()
-  (cond ((> (frame-pixel-width) 1280) '(90 . 0.75))
-        (t                            '(0.5 . 0.5))))
+;(defun size-callback ()
+;  (cond ((> (frame-pixel-width) 1280) '(90 . 0.75))
+;        (t                            '(0.5 . 0.5))))
 
-(custom-set-variables
- '(zoom-size 'size-callback))
+;(custom-set-variables
+; '(zoom-size 'size-callback))
 
 ;(prefer-coding-system 'utf-8)
 ;(set-default-coding-systems 'utf-8)
