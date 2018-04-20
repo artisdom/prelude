@@ -31,6 +31,7 @@
 (require 'prelude-emacs-lisp)
 
 (global-linum-mode 1)                   ; add line numbers on the left
+(global-auto-revert-mode t)
 
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
@@ -182,7 +183,9 @@
 
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
-(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery")
+(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/debug/bin/cquery")
+;(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery")
+
 ;; Log file
 (setq cquery-extra-args '("--log-file=/workspace/git/ezfenxi/cquery.log"))
 ;; Initialization options
@@ -197,3 +200,16 @@
 (add-hook 'c-mode-hook #'lsp-cquery-enable)
 (add-hook 'c++-mode-hook #'lsp-cquery-enable)
 (add-hook 'objc-mode-hook #'lsp-cquery-enable)
+
+(define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
+(define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
+
+;; (cquery-xref-find-custom "$cquery/base")
+;; (cquery-xref-find-custom "$cquery/callers")
+;; (cquery-xref-find-custom "$cquery/derived")
+;; (cquery-xref-find-custom "$cquery/vars")
+
+;; Alternatively, use lsp-ui-peek interface
+;; (lsp-ui-peek-find-custom 'base "$cquery/base")
+;; (lsp-ui-peek-find-custom 'callers "$cquery/callers")
+;; (lsp-ui-peek-find-custom 'random "$cquery/random") ;; jump to a random declaration
