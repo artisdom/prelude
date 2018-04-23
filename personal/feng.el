@@ -5,6 +5,8 @@
 
 ;(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
 ;                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/4.0.1/bin/"))
 (setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
@@ -14,7 +16,7 @@
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
-(prelude-require-packages '(lsp-mode lsp-ui cquery)) ; cquery
+(prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
 
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
@@ -32,6 +34,9 @@
 
 (global-linum-mode 1)                   ; add line numbers on the left
 (global-auto-revert-mode t)
+
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
@@ -183,16 +188,18 @@
 
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
-(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/debug/bin/cquery")
+(setq cquery-executable "/home/feng/w/cpp/cquery/build/debug/bin/cquery")
+;(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/debug/bin/cquery")
 ;(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery")
 
 ;; Log file
-(setq cquery-extra-args '("--log-file=/workspace/git/ezfenxi/cquery.log"))
+(setq cquery-extra-args '("--log-file=/home/feng/cquery.log"))
+;(setq cquery-extra-args '("--log-file=/workspace/git/ezfenxi/cquery.log"))
 ;; Initialization options
 ;; (setq cquery-extra-init-params '())
 ;(setq cquery-extra-init-params '(:cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg"))
 ;(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg_emacs"))
-(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack"))
+(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
 
 (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
 (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
@@ -201,8 +208,8 @@
 (add-hook 'c++-mode-hook #'lsp-cquery-enable)
 (add-hook 'objc-mode-hook #'lsp-cquery-enable)
 
-(define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
-(define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
+;;(define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
+;;(define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
 
 ;; (cquery-xref-find-custom "$cquery/base")
 ;; (cquery-xref-find-custom "$cquery/callers")
@@ -213,3 +220,17 @@
 ;; (lsp-ui-peek-find-custom 'base "$cquery/base")
 ;; (lsp-ui-peek-find-custom 'callers "$cquery/callers")
 ;; (lsp-ui-peek-find-custom 'random "$cquery/random") ;; jump to a random declaration
+
+; Completion
+(require 'company-lsp)
+(push 'company-lsp company-backends)
+(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
+
+;;(setq cquery-extra-init-params '(:completion (:detailedLabel t)))
+
+; Semantic highlighting
+(setq cquery-sem-highlight-method 'font-lock)
+;; alternatively, (setq cquery-sem-highlight-method 'overlay)
+
+;; For rainbow semantic highlighting
+(cquery-use-default-rainbow-sem-highlight)
