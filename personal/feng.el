@@ -17,7 +17,7 @@
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
 (prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
-
+(prelude-require-packages '(zeal-at-point helm-dash frames-only-mode))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 
@@ -37,6 +37,9 @@
 
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
+
+(eval-after-load "flyspell"
+  '(define-key flyspell-mode-map (kbd "C-;") nil))
 
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
@@ -79,8 +82,6 @@
 
 (yas-global-mode)
 (yas-reload-all)
-
-(menu-bar-mode)
 
 (setq projectile-enable-caching t)
 ;(setq prelude-whitespace nil)
@@ -145,7 +146,10 @@
 ;(require 'window-purpose)
 ;(purpose-mode)
 
-(tool-bar-mode)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(tool-bar-mode -1)
 
 (tool-bar-add-item "left-arrow" 'rtags-location-stack-back
                    'rtags-location-stack-back
@@ -234,3 +238,36 @@
 
 ;; For rainbow semantic highlighting
 (cquery-use-default-rainbow-sem-highlight)
+
+
+;; Port of Coderush's smart semi-colon feature to Emacs
+;; When I hit semi-colon anywhere, Emacs will move cursor to the end of current
+;; line and insert semi-colon (if it's not already there).
+;; Idea from last @CoderetreatCZ - HK
+
+(defun maio/electric-semicolon ()
+  (interactive)
+  (end-of-line)
+  (when (not (looking-back ";"))
+    (insert ";"))
+  (newline-and-indent))
+
+;(define-key c-mode-base-map (kbd "<C-S-return>") 'maio/electric-semicolon)
+;(define-key c-mode-base-map (kbd "<C-M-return>") 'maio/electric-semicolon)
+;(define-key c-mode-base-map (kbd "<M-return>") 'maio/electric-semicolon)
+(define-key c-mode-base-map (kbd "C-;") 'maio/electric-semicolon)
+
+;(define-key c-mode-base-map (kbd "<tab>") 'clang-format-region)
+
+(setq helm-dash-browser-func 'eww)
+
+(defun bjm/kill-this-buffer ()
+  "Kill the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+
+(global-set-key (kbd "C-x k") 'bjm/kill-this-buffer)
+
+(global-set-key (kbd "C-x w") 'delete-frame)
+
+(frames-only-mode)
