@@ -37,6 +37,7 @@
 
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
+(company-mode)
 
 (eval-after-load "flyspell"
   '(define-key flyspell-mode-map (kbd "C-;") nil))
@@ -239,6 +240,14 @@
 ;; For rainbow semantic highlighting
 (cquery-use-default-rainbow-sem-highlight)
 
+
+(define-key c++-mode-map (kbd "<f3>") #'compile)
+(define-key c++-mode-map (kbd "<f2>") #'lsp-ui-imenu)
+
+(defun compile-run-remake ()
+  "Run `remake -x` in a compilation buffer."
+  (interactive)
+  (compile "remake -x"))
 
 ;; Port of Coderush's smart semi-colon feature to Emacs
 ;; When I hit semi-colon anywhere, Emacs will move cursor to the end of current
