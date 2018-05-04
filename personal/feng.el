@@ -15,17 +15,20 @@
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company plantuml-mode))
 (prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
-(prelude-require-packages '(rtags flycheck-rtags company-rtags helm-rtags)) ;rtags
+(prelude-require-packages '(rtags flycheck-rtags company-rtags)) ;rtags
 (prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
-(prelude-require-packages '(zeal-at-point helm-dash frames-only-mode))
+(prelude-require-packages '(zeal-at-point frames-only-mode posframe))
+(prelude-require-packages '(ivy ivy-posframe ivy-xref))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
+; helm-rtags  helm-dash
 
 (require 'prelude-ido)
 (require 'prelude-c)
 (require 'prelude-haskell)
-(require 'prelude-helm)
-(require 'prelude-helm-everywhere)
+(require 'prelude-ivy)
+;(require 'prelude-helm)
+;(require 'prelude-helm-everywhere)
 (require 'prelude-org)
 (require 'prelude-python)
 (require 'prelude-shell)
@@ -279,4 +282,6 @@
 
 (global-set-key (kbd "C-x w") 'delete-frame)
 
-(frames-only-mode)
+;(frames-only-mode)
+
+(require 'posframe)
