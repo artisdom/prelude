@@ -17,8 +17,10 @@
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags company-rtags)) ;rtags
 (prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
-(prelude-require-packages '(zeal-at-point frames-only-mode posframe))
-(prelude-require-packages '(ivy ivy-posframe ivy-xref))
+(prelude-require-packages '(zeal-at-point frames-only-mode smex))
+(prelude-require-packages '(ivy ivy-xref counsel counsel-dash counsel-world-clock))
+(prelude-require-packages '(posframe ivy-posframe company-childframe))
+(prelude-require-packages '(chinese-yasdcv pyim))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
@@ -49,11 +51,6 @@
 (cua-mode)
 
 (server-start)
-
-(load "desktop")
-(desktop-save-mode 1)
-;(desktop-load-default)
-(desktop-read)
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 ;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
@@ -279,9 +276,38 @@
   (kill-buffer (current-buffer)))
 
 (global-set-key (kbd "C-x k") 'bjm/kill-this-buffer)
-
 (global-set-key (kbd "C-x w") 'delete-frame)
-
 ;(frames-only-mode)
 
+;; ivy
+(setq ivy-count-format "(%d/%d) ")
+(setq magit-completing-read-function 'ivy-completing-read)
+(setq projectile-completion-system 'ivy)
+(setq helm-make-completion-method 'ivy)
+
+;; posframe
 (require 'posframe)
+(require 'ivy-posframe)
+;; (setq ivy-display-function #'ivy-posframe-display)
+;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
+;; (setq ivy-display-function #'ivy-posframe-display-at-window-center)
+;; (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
+;; (setq ivy-display-function #'ivy-posframe-display-at-window-bottom-left)
+(setq ivy-display-function #'ivy-posframe-display-at-point)
+(setq ivy-posframe-parameters
+      '((left-fringe . 10)
+        (right-fringe . 10)))
+(ivy-posframe-enable)
+
+;; (require 'company-childframe)
+;; (company-childframe-mode 1)
+
+;; (require 'desktop) ;this line is needed.
+;; (push '(company-childframe-mode . nil)
+;;       desktop-minor-mode-table)
+
+(setq desktop-load-locked-desktop t)
+(load "desktop")
+(desktop-save-mode 1)
+;(desktop-load-default)
+(desktop-read)
