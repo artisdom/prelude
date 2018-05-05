@@ -20,10 +20,12 @@
 (prelude-require-packages '(zeal-at-point frames-only-mode smex))
 (prelude-require-packages '(ivy ivy-xref counsel counsel-dash counsel-world-clock))
 (prelude-require-packages '(posframe ivy-posframe company-childframe))
-(prelude-require-packages '(chinese-yasdcv pyim))
+(prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd))
+(prelude-require-packages '(powerline all-the-icons all-the-icons-dired all-the-icons-ivy spaceline spaceline-all-the-icons))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
+; airline-themes
 
 (require 'prelude-ido)
 (require 'prelude-c)
@@ -139,7 +141,6 @@
  sr-speedbar-right-side nil
 )
 
-(require 'neotree)
 (require 'jump-tree)
 ;(require 'sourcetrail)
 ;sourcetrail-mode
@@ -311,3 +312,20 @@
 (desktop-save-mode 1)
 ;(desktop-load-default)
 (desktop-read)
+
+;; all-the-icons
+(require 'all-the-icons)
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(all-the-icons-ivy-setup)
+
+(require 'neotree)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+(require 'powerline)
+;(powerline-default-theme)
+(require 'spaceline)
+(require 'spaceline-all-the-icons)
+(spaceline-all-the-icons-theme)
+
+(require 'move-text)
+(move-text-default-bindings)
