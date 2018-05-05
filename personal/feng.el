@@ -20,7 +20,7 @@
 (prelude-require-packages '(zeal-at-point frames-only-mode smex))
 (prelude-require-packages '(ivy ivy-xref counsel counsel-dash counsel-world-clock))
 (prelude-require-packages '(posframe ivy-posframe company-childframe))
-(prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd))
+(prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd yasnippet yasnippet-snippets))
 (prelude-require-packages '(powerline all-the-icons all-the-icons-dired all-the-icons-ivy spaceline spaceline-all-the-icons))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
@@ -329,3 +329,6 @@
 
 (require 'move-text)
 (move-text-default-bindings)
+
+(require 'yasnippet)
+(yas-global-mode 1)
