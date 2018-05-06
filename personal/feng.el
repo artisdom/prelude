@@ -332,3 +332,6 @@
 
 (require 'yasnippet)
 (yas-global-mode 1)
+
+;(require 'company-box)
+;(add-hook 'company-mode-hook 'company-box-mode)
