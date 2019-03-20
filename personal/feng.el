@@ -5,11 +5,11 @@
 
 ;(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
 ;                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+;(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+;                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
-(setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/4.0.1/bin/"))
-(setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
+;(setenv "PATH" (concat (getenv "PATH") ":/proj/epg-tools/clang/4.0.1/bin/"))
+;(setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
 
 ;; (prelude-require-package 'org-mode)
 (prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company plantuml-mode))
@@ -22,6 +22,7 @@
 (prelude-require-packages '(posframe ivy-posframe company-childframe))
 (prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd yasnippet yasnippet-snippets))
 (prelude-require-packages '(powerline all-the-icons all-the-icons-dired all-the-icons-ivy spaceline spaceline-all-the-icons))
+(prelude-require-packages '(org-download))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
@@ -86,6 +87,9 @@
 (yas-global-mode)
 (yas-reload-all)
 
+;(define-key projectile-mode-map projectile-keymap-prefix nil)
+;(define-key projectile-mode-map (kbd "C-x p") #'projectile-command-map)
+;(setq projectile-keymap-prefix (kbd "C-x p"))
 (setq projectile-enable-caching t)
 ;(setq prelude-whitespace nil)
 
@@ -194,12 +198,13 @@
 
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
-(setq cquery-executable "/home/feng/w/cpp/cquery/build/debug/bin/cquery")
+;(setq cquery-executable "/home/tfeng/w/cpp/cquery2/build/cquery")
+;(setq cquery-executable "/home/feng/w/cpp/cquery/build/debug/bin/cquery")
 ;(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/debug/bin/cquery")
 ;(setq cquery-executable "/home/ezfenxi/w/cpp/cquery/build/release/bin/cquery")
 
 ;; Log file
-(setq cquery-extra-args '("--log-file=/home/feng/cquery.log"))
+;(setq cquery-extra-args '("--log-file=/home/tfeng/cquery.log"))
 ;(setq cquery-extra-args '("--log-file=/workspace/git/ezfenxi/cquery.log"))
 ;; Initialization options
 ;; (setq cquery-extra-init-params '())
@@ -292,9 +297,9 @@
 ;; (setq ivy-display-function #'ivy-posframe-display)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-center)
-;; (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
+(setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-bottom-left)
-(setq ivy-display-function #'ivy-posframe-display-at-point)
+;;(setq ivy-display-function #'ivy-posframe-display-at-point)
 (setq ivy-posframe-parameters
       '((left-fringe . 10)
         (right-fringe . 10)))
@@ -335,3 +340,7 @@
 
 ;(require 'company-box)
 ;(add-hook 'company-mode-hook 'company-box-mode)
+
+; org-download
+(require 'org-download)
+(add-hook 'dired-mode-hook 'org-download-enable)
