@@ -27,6 +27,7 @@
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
 ; airline-themes
+; M-x all-the-icons-install-fonts
 
 (require 'prelude-ido)
 (require 'prelude-c)
