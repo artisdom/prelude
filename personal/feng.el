@@ -22,11 +22,14 @@
 (prelude-require-packages '(posframe ivy-posframe company-childframe))
 (prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd yasnippet yasnippet-snippets))
 (prelude-require-packages '(powerline all-the-icons all-the-icons-dired all-the-icons-ivy spaceline spaceline-all-the-icons))
-(prelude-require-packages '(org-download))
+(prelude-require-packages '(org-download bind-key))
 ;(prelude-require-packages '(project-explorer window-purpose zoom))
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
 ; airline-themes
+
+;Installing Fonts
+;In order for the icons to work it is very important that you install the Resource Fonts included in this package, they are available in the fonts directory. You can also install the latest fonts for this package in the (guessed?) based on the OS by calling the following function;
 ; M-x all-the-icons-install-fonts
 
 (require 'prelude-ido)
@@ -292,6 +295,55 @@
 (setq projectile-completion-system 'ivy)
 (setq helm-make-completion-method 'ivy)
 
+;; Ivy-based interface to standard commands
+(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-x C-f") 'counsel-fzf)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "<f2> j") 'counsel-set-variable)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
+;; Ivy-based interface to shell and system tools
+(global-set-key (kbd "C-c c") 'counsel-compile)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c k") 'counsel-rg)
+(global-set-key (kbd "C-c m") 'counsel-linux-app)
+(global-set-key (kbd "C-c n") 'counsel-fzf)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c J") 'counsel-file-jump)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+;; Ivy-resume and other commands
+;; ivy-resume resumes the last Ivy-based completion.
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "C-c b") 'counsel-bookmark)
+(global-set-key (kbd "C-c d") 'counsel-descbinds)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c o") 'counsel-outline)
+(global-set-key (kbd "C-c t") 'counsel-load-theme)
+(global-set-key (kbd "C-c F") 'counsel-org-file)
+
+;; bind-key
+(require 'bind-key)
+
+(bind-keys*
+ ("C-x C-f" . counsel-fzf)
+ ("C-c g" . counsel-git)
+ ("C-c k" . counsel-rg)
+ ("C-c n" . counsel-fzf)
+ ("C-c o" . counsel-outline))
+
 ;; posframe
 (require 'posframe)
 (require 'ivy-posframe)
@@ -345,3 +397,8 @@
 ; org-download
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable)
+
+; orgmode c++ flags
+(defvar org-babel-default-header-args:cpp '((:flags . "-std=c++17")))
+
+;(require 'org-loaddefs.el)
