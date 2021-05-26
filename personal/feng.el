@@ -12,14 +12,14 @@
 ;(setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode company plantuml-mode))
-(prelude-require-packages '(haskell-mode ghc haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
+(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode plantuml-mode))
+(prelude-require-packages '(haskell-mode haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
-(prelude-require-packages '(rtags flycheck-rtags company-rtags)) ;rtags
-(prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
+(prelude-require-packages '(rtags flycheck-rtags)) ;rtags
+;(prelude-require-packages '(lsp-mode lsp-ui cquery company company-lsp)) ; cquery
 (prelude-require-packages '(zeal-at-point frames-only-mode smex))
 (prelude-require-packages '(ivy ivy-xref counsel counsel-dash counsel-world-clock))
-(prelude-require-packages '(posframe ivy-posframe company-childframe))
+(prelude-require-packages '(posframe ivy-posframe))
 (prelude-require-packages '(chinese-yasdcv pyim use-package simple-httpd yasnippet yasnippet-snippets))
 (prelude-require-packages '(powerline all-the-icons all-the-icons-dired all-the-icons-ivy spaceline spaceline-all-the-icons))
 (prelude-require-packages '(org-download bind-key))
@@ -27,6 +27,12 @@
 ;(prelude-require-packages '(use-package lsp-mode))
 ; helm-rtags  helm-dash
 ; airline-themes
+
+(disable-theme 'zenburn)
+;(setq prelude-theme nil)
+;(load-theme 'hydandata-light)
+;(setq prelude-theme 'hydandata-light)
+(setq prelude-theme 'solarized-light)
 
 ;Installing Fonts
 ;In order for the icons to work it is very important that you install the Resource Fonts included in this package, they are available in the fonts directory. You can also install the latest fonts for this package in the (guessed?) based on the OS by calling the following function;
@@ -47,9 +53,9 @@
 (global-linum-mode 1)                   ; add line numbers on the left
 (global-auto-revert-mode t)
 
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(company-mode)
+;(require 'company)
+;(add-hook 'after-init-hook 'global-company-mode)
+;(company-mode)
 
 (eval-after-load "flyspell"
   '(define-key flyspell-mode-map (kbd "C-;") nil))
@@ -196,11 +202,11 @@
                    :help   "desktop-save")
 
 
-(require 'cquery)
-(require 'lsp-mode)
-(require 'lsp-ui)
+;(require 'cquery)
+;(require 'lsp-mode)
+;(require 'lsp-ui)
 
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
 ;(setq cquery-executable "/home/tfeng/w/cpp/cquery2/build/cquery")
 ;(setq cquery-executable "/home/feng/w/cpp/cquery/build/debug/bin/cquery")
@@ -214,14 +220,14 @@
 ;; (setq cquery-extra-init-params '())
 ;(setq cquery-extra-init-params '(:cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg"))
 ;(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :cacheDirectory "/workspace/git/ezfenxi/cquery-cache/epg_emacs"))
-(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
+;(setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
 
-(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+;(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+;(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 
-(add-hook 'c-mode-hook #'lsp-cquery-enable)
-(add-hook 'c++-mode-hook #'lsp-cquery-enable)
-(add-hook 'objc-mode-hook #'lsp-cquery-enable)
+;(add-hook 'c-mode-hook #'lsp-cquery-enable)
+;(add-hook 'c++-mode-hook #'lsp-cquery-enable)
+;(add-hook 'objc-mode-hook #'lsp-cquery-enable)
 
 ;;(define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
 ;;(define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
@@ -237,18 +243,18 @@
 ;; (lsp-ui-peek-find-custom 'random "$cquery/random") ;; jump to a random declaration
 
 ; Completion
-(require 'company-lsp)
-(push 'company-lsp company-backends)
-(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
+;(require 'company-lsp)
+;(push 'company-lsp company-backends)
+;(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
 
 ;;(setq cquery-extra-init-params '(:completion (:detailedLabel t)))
 
 ; Semantic highlighting
-(setq cquery-sem-highlight-method 'font-lock)
+;(setq cquery-sem-highlight-method 'font-lock)
 ;; alternatively, (setq cquery-sem-highlight-method 'overlay)
 
 ;; For rainbow semantic highlighting
-(cquery-use-default-rainbow-sem-highlight)
+;(cquery-use-default-rainbow-sem-highlight)
 
 
 (define-key c++-mode-map (kbd "<f3>") #'compile)
@@ -290,16 +296,16 @@
 ;(frames-only-mode)
 
 ;; ivy
-(setq ivy-count-format "(%d/%d) ")
-(setq magit-completing-read-function 'ivy-completing-read)
-(setq projectile-completion-system 'ivy)
-(setq helm-make-completion-method 'ivy)
+;(setq ivy-count-format "(%d/%d) ")
+;(setq magit-completing-read-function 'ivy-completing-read)
+;(setq projectile-completion-system 'ivy)
+;(setq helm-make-completion-method 'ivy)
 
 ;; Ivy-based interface to standard commands
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 ; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "C-x C-f") 'counsel-fzf)
+;(global-set-key (kbd "C-x C-f") 'counsel-fzf)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
@@ -338,25 +344,25 @@
 (require 'bind-key)
 
 (bind-keys*
- ("C-x C-f" . counsel-fzf)
+ ;("C-x C-f" . counsel-fzf)
  ("C-c g" . counsel-git)
  ("C-c k" . counsel-rg)
  ("C-c n" . counsel-fzf)
  ("C-c o" . counsel-outline))
 
 ;; posframe
-(require 'posframe)
-(require 'ivy-posframe)
+;(require 'posframe)
+;(require 'ivy-posframe)
 ;; (setq ivy-display-function #'ivy-posframe-display)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-center)
-(setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
+;(setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-bottom-left)
 ;;(setq ivy-display-function #'ivy-posframe-display-at-point)
-(setq ivy-posframe-parameters
-      '((left-fringe . 10)
-        (right-fringe . 10)))
-(ivy-posframe-enable)
+;(setq ivy-posframe-parameters
+      ;'((left-fringe . 10)
+      ;  (right-fringe . 10)))
+;(ivy-posframe-enable)
 
 ;; (require 'company-childframe)
 ;; (company-childframe-mode 1)
