@@ -33,6 +33,7 @@
 ;(load-theme 'hydandata-light)
 ;(setq prelude-theme 'hydandata-light)
 (setq prelude-theme 'solarized-light)
+;(setq prelude-theme 'zenburn)
 
 ;Installing Fonts
 ;In order for the icons to work it is very important that you install the Resource Fonts included in this package, they are available in the fonts directory. You can also install the latest fonts for this package in the (guessed?) based on the OS by calling the following function;
@@ -408,3 +409,6 @@
 (defvar org-babel-default-header-args:cpp '((:flags . "-std=c++17")))
 
 ;(require 'org-loaddefs.el)
+
+(require 'org-tempo)
+
