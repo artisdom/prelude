@@ -12,7 +12,7 @@
 ;(setq exec-path (append exec-path '("/proj/epg-tools/clang/4.0.1/bin/")))
 
 ;; (prelude-require-package 'org-mode)
-(prelude-require-packages '(elscreen csv-mode dirtree mmm-mode php-mode markdown-mode plantuml-mode))
+(prelude-require-packages '(elscreen dirtree mmm-mode php-mode markdown-mode plantuml-mode))
 (prelude-require-packages '(haskell-mode haskell-emacs haskell-snippets shm flycheck-hdevtools)) ;haskell
 (prelude-require-packages '(ws-butler dtrt-indent sr-speedbar flycheck 0blayout neotree jump-tree))
 (prelude-require-packages '(rtags flycheck-rtags)) ;rtags
@@ -32,7 +32,7 @@
 ;(setq prelude-theme nil)
 ;(load-theme 'hydandata-light)
 ;(setq prelude-theme 'hydandata-light)
-(setq prelude-theme 'solarized-light)
+;(setq prelude-theme 'solarized-light)
 ;(setq prelude-theme 'zenburn)
 
 ;Installing Fonts
@@ -410,5 +410,5 @@
 
 ;(require 'org-loaddefs.el)
 
-(require 'org-tempo)
+;(require 'org-tempo)
 
