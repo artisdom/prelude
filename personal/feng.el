@@ -51,7 +51,7 @@
 (require 'prelude-js)
 (require 'prelude-emacs-lisp)
 
-(global-linum-mode 1)                   ; add line numbers on the left
+;(global-linum-mode 1)                   ; add line numbers on the left
 (global-auto-revert-mode t)
 
 ;(require 'company)
@@ -64,7 +64,7 @@
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
 
-(server-start)
+;(server-start)
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 ;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
