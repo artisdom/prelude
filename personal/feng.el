@@ -423,3 +423,5 @@ advice, files on WSL can not be saved."
 
   (advice-add 'file-acl :around 'fp/ignore-wsl-acls))
 
+(menu-bar-mode 1)
+
