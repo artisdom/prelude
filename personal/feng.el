@@ -410,7 +410,7 @@
 
 ;(require 'org-loaddefs.el)
 
-;(require 'org-tempo)
+(require 'org-tempo)
 
 (when (eq system-type 'windows-nt)
   (defun fp/ignore-wsl-acls (orig-fun &rest args)
